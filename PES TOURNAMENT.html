@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Manager</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        h2, h3 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        select, button, input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #666;
+        }
+        #leaderboard, #bet-history table, #shopping-history table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #leaderboard th, #bet-history th, #shopping-history th {
+            background-color: #444;
+            color: #ffffff;
+            padding: 10px;
+            border-bottom: 2px solid #666;
+        }
+        #leaderboard td, #bet-history td, #shopping-history td {
+            padding: 8px;
+            border-bottom: 1px solid #555;
+            text-align: center;
+        }
+        #bet-phase, #shopping-phase {
+            margin-top: 20px;
+        }
+        #bet-phase label, #shopping-phase label {
+            display: block;
+            margin-bottom: 5px;
+            color: #bbbbbb;
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+</head>
+<body>
+
+<div class="container">
+    <h2>Tournament Manager</h2>
+
+    <!-- Ranking Form -->
+    <div>
+        <h3>Rank the Players</h3>
+        <div class="form-group">
+            <label for="rank1">1st Place:</label>
+            <select id="rank1">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="rank2">2nd Place:</label>
+            <select id="rank2">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="rank3">3rd Place:</label>
+            <select id="rank3">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="rank4">4th Place:</label>
+            <select id="rank4">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="rank5">5th Place:</label>
+            <select id="rank5">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+        </div>
+        <button onclick="submitRanks()">Submit Ranks</button>
+        <p>TOURNAMENT No: <span id="submit-counter">0</span> </p>
+    </div>
+
+    <!-- Leaderboard -->
+    <div id="leaderboard-section">
+        <h3>Players Wallet</h3>
+        <table id="leaderboard">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Coins</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Leaderboard content will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bet Phase -->
+    <div id="bet-phase">
+        <h3>Bet Phase</h3>
+        <div class="form-group">
+            <label for="player1">Player 1:</label>
+            <select id="player1">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+            <input type="text" id="score1" placeholder="Score" />
+        </div>
+        <div class="form-group">
+            <label for="player2">Player 2:</label>
+            <select id="player2">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+            <input type="text" id="score2" placeholder="Score" />
+        </div>
+        <div class="form-group">
+            <label for="bet-amount">Bet Amount:</label>
+            <select id="bet-amount">
+                <option value="5">5 Coins</option>
+                <option value="10">10 Coins</option>
+                <option value="15">15 Coins</option>
+                <option value="20">20 Coins</option>
+                <option value="25">25 Coins</option>
+                <option value="30">30 Coins</option>
+            </select>
+        </div>
+        <button onclick="placeBet()">Place Bet</button>
+    </div>
+
+    <!-- Match History -->
+    <div id="bet-history">
+        <h3>Match History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Match ID</th>
+                    <th>Player 1</th>
+                    <th>Score 1</th>
+                    <th>Player 2</th>
+                    <th>Score 2</th>
+                    <th>Bet Amount</th>
+                    <th>Winner</th>
+                </tr>
+            </thead>
+            <tbody id="history">
+                <!-- Match history will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Shopping Phase -->
+    <div id="shopping-phase">
+        <h3>Shopping Phase</h3>
+        <div class="form-group">
+            <label for="shop-player">Player:</label>
+            <select id="shop-player">
+                <option value="Hamid">Hamid</option>
+                <option value="Yacine">Yacine</option>
+                <option value="Ghani">Ghani</option>
+                <option value="Hayda">Hayda</option>
+                <option value="Zabana">Zabana</option>
+                <option value="Amara">Amara</option>
+            </select>
+            <input type="text" id="shop-amount" placeholder="Amount Spent" />
+        </div>
+        <button onclick="submitShop()">Submit Spending</button>
+    </div>
+
+    <!-- Shopping History -->
+    <div id="shopping-history">
+        <h3>Shopping History</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shop ID</th>
+                    <th>Player</th>
+                    <th>Amount Spent</th>
+                </tr>
+            </thead>
+            <tbody id="shop-history">
+                <!-- Shopping history will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const pointsForRank = [10, 7, 5, 3, 1];
+    let submitCounter = parseInt(localStorage.getItem('submitCounter')) || 0;
+
+    function getPlayerData() {
+        return JSON.parse(localStorage.getItem('playerData')) || {
+            Hamid: { points: 5 },
+            Yacine: { points: 5 },
+            Ghani: { points: 5 },
+            Hayda: { points: 5 },
+            Zabana: { points: 5 },
+            Amara: { points: 5 }
+        };
+    }
+
+    function updateLeaderboard() {
+        const playerData = getPlayerData();
+        const tbody = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+        tbody.innerHTML = '';
+
+        Object.keys(playerData).forEach(player => {
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = player.charAt(0).toUpperCase() + player.slice(1);
+            row.insertCell(1).innerText = playerData[player].points;
+        });
+    }
+
+    function submitRanks() {
+        const playerData = getPlayerData();
+
+        const ranks = [
+            document.getElementById('rank1').value,
+            document.getElementById('rank2').value,
+            document.getElementById('rank3').value,
+            document.getElementById('rank4').value,
+            document.getElementById('rank5').value
+        ];
+
+        const usedPlayers = new Set();
+        ranks.forEach((player, index) => {
+            if (!usedPlayers.has(player)) {
+                playerData[player].points = (playerData[player].points || 0) + pointsForRank[index];
+                usedPlayers.add(player);
+            } else {
+                alert('Duplicate players detected in ranks. Please assign unique ranks.');
+                return;
+            }
+        });
+
+        localStorage.setItem('playerData', JSON.stringify(playerData));
+        updateLeaderboard();
+        
+        submitCounter++;
+        localStorage.setItem('submitCounter', submitCounter);
+        document.getElementById('submit-counter').innerText = submitCounter;
+    }
+
+    function placeBet() {
+        const player1 = document.getElementById('player1').value;
+        const player2 = document.getElementById('player2').value;
+        const score1 = parseInt(document.getElementById('score1').value) || 0;
+        const score2 = parseInt(document.getElementById('score2').value) || 0;
+        const betAmount = parseInt(document.getElementById('bet-amount').value);
+
+        const playerData = getPlayerData();
+
+        if (player1 === player2) {
+            alert('Players must be different for a bet.');
+            return;
+        }
+
+        if (playerData[player1].points < betAmount || playerData[player2].points < betAmount) {
+            alert('One or both players do not have enough coins to place this bet.');
+            return;
+        }
+
+        let winner;
+        if (score1 > score2) {
+            winner = player1;
+            playerData[player1].points += betAmount;
+            playerData[player2].points -= betAmount;
+        } else if (score2 > score1) {
+            winner = player2;
+            playerData[player2].points += betAmount;
+            playerData[player1].points -= betAmount;
+        } else {
+            winner = null; // Tie
+        }
+
+        const historyTable = document.getElementById('history');
+        const newRow = historyTable.insertRow();
+        newRow.insertCell(0).innerText = new Date().toISOString();
+        newRow.insertCell(1).innerText = player1;
+        newRow.insertCell(2).innerText = score1;
+        newRow.insertCell(3).innerText = player2;
+        newRow.insertCell(4).innerText = score2;
+        newRow.insertCell(5).innerText = betAmount;
+        newRow.insertCell(6).innerText = winner ? winner : 'Tie';
+
+        localStorage.setItem('playerData', JSON.stringify(playerData));
+        updateLeaderboard();
+        saveMatchHistory();
+    }
+
+    function saveMatchHistory() {
+        const historyTable = document.getElementById('history');
+        const rows = historyTable.getElementsByTagName('tr');
+        const historyData = [];
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            const match = {
+                date: cells[0].innerText,
+                player1: cells[1].innerText,
+                score1: cells[2].innerText,
+                player2: cells[3].innerText,
+                score2: cells[4].innerText,
+                betAmount: cells[5].innerText,
+                winner: cells[6].innerText
+            };
+            historyData.push(match);
+        }
+        localStorage.setItem('matchHistory', JSON.stringify(historyData));
+    }
+
+    function loadMatchHistory() {
+        const historyData = JSON.parse(localStorage.getItem('matchHistory')) || [];
+        const historyTable = document.getElementById('history');
+        historyTable.innerHTML = '';
+        historyData.forEach(match => {
+            const newRow = historyTable.insertRow();
+            newRow.insertCell(0).innerText = match.date;
+            newRow.insertCell(1).innerText = match.player1;
+            newRow.insertCell(2).innerText = match.score1;
+            newRow.insertCell(3).innerText = match.player2;
+            newRow.insertCell(4).innerText = match.score2;
+            newRow.insertCell(5).innerText = match.betAmount;
+            newRow.insertCell(6).innerText = match.winner;
+        });
+    }
+
+    function submitShop() {
+        const player = document.getElementById('shop-player').value;
+        const shopAmount = parseInt(document.getElementById('shop-amount').value) || 0;
+        const playerData = getPlayerData();
+
+        if (playerData[player].points < shopAmount) {
+            alert('Player does not have enough coins to spend this amount.');
+            return;
+        }
+
+        playerData[player].points -= shopAmount;
+
+        const shopHistoryTable = document.getElementById('shop-history');
+        const newRow = shopHistoryTable.insertRow();
+        newRow.insertCell(0).innerText = new Date().toISOString();
+        newRow.insertCell(1).innerText = player;
+        newRow.insertCell(2).innerText = shopAmount;
+
+        localStorage.setItem('playerData', JSON.stringify(playerData));
+        updateLeaderboard();
+        saveShopHistory();
+    }
+
+    function saveShopHistory() {
+        const shopHistoryTable = document.getElementById('shop-history');
+        const rows = shopHistoryTable.getElementsByTagName('tr');
+        const shopHistoryData = [];
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            const shop = {
+                date: cells[0].innerText,
+                player: cells[1].innerText,
+                shopAmount: cells[2].innerText
+            };
+            shopHistoryData.push(shop);
+        }
+        localStorage.setItem('shopHistory', JSON.stringify(shopHistoryData));
+    }
+
+    function loadShopHistory() {
+        const shopHistoryData = JSON.parse(localStorage.getItem('shopHistory')) || [];
+        const shopHistoryTable = document.getElementById('shop-history');
+        shopHistoryTable.innerHTML = '';
+        shopHistoryData.forEach(shop => {
+            const newRow = shopHistoryTable.insertRow();
+            newRow.insertCell(0).innerText = shop.date;
+            newRow.insertCell(1).innerText = shop.player;
+            newRow.insertCell(2).innerText = shop.shopAmount;
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('submit-counter').innerText = submitCounter;
+        updateLeaderboard();
+        loadMatchHistory();
+        loadShopHistory();
+    });
+</script>
+
+</body>
+</html>
